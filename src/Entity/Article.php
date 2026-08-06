@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ArticleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -15,25 +16,49 @@ class Article
     private ?int $id = null;
 
     #[ORM\Column(length: 150)]
+    #[Assert\NotBlank(message: 'Il faut remplir le titre')]
+    #[Assert\Length(
+        min: 10,
+        max: 150,
+        minMessage: 'Le titre doit avoir au minium {{ limit }}',
+        maxMessage: 'Le titre doit avoir au maximum {{ limit }}',
+    )]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Il faut remplir le chapeau')]
+    #[Assert\Length(
+        min: 10,
+        max: 255,
+        minMessage: 'Le chapeau doit avoir au minium {{ limit }}',
+        maxMessage: 'Le chapeau doit avoir au maximum {{ limit }}',
+    )]
     private ?string $chapeau = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Il faut remplir le contenu')]
+    #[Assert\Length(
+    min: 20,
+    max: 1000,
+    minMessage: "Le contenu doit contenir au moins {{ limit }} caractères.",
+    maxMessage: "Le contenu ne peut pas dépasser {{ limit }} caractères.")]
     private ?string $contenu = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    //Gérer dans le controller
     private ?string $photo = null;
 
     #[ORM\Column]
+    //Gérer dans le controller
     private ?\DateTime $date_creation = null;
 
     #[ORM\Column]
+    //Gérer dans le controller
     private ?\DateTime $date_modification = null;
 
     #[ORM\Column]
-    private ?bool $publie = null;
+    //mise par défaut à false. Si non cochée sur le formulaire => 0,false, non publié sinon 1,true et publié
+    private ?bool $publie = false;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
@@ -41,6 +66,9 @@ class Article
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(
+        message : 'Il faut selectionner une categorie',
+    )]
     private ?Categorie $categorie = null;
 
     public function getId(): ?int

@@ -57,11 +57,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('photo', FileType::class, [
                 "mapped"=> false,
-                'constraints'=>[
-                    new Assert\NotBlank(
-                        message: 'Il faut importer une photo'
-                    )
-                ]
+                //Contrainte gérée dans le controller
                 ])
             ->add('nom', TextType::class,[
                 'constraints'=> [
