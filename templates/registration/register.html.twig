@@ -10,6 +10,7 @@
     {{ form_start(registrationForm, { attr: { novalidate: 'novalidate' } }) }}
     {# Chaques erreurs des champs est gérés par les contraintes mises dans le RegistrationForumType #}
         {{ form_row(registrationForm.email) }}
+        {# form_row permet d'afficher le label et les erreurs (au lieu de faire le bloc form label,widget et errors pour les inputs qu'on veut afficher(sauf si formulaire pour les champs complets)) #}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}

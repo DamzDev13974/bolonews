@@ -70,7 +70,10 @@ class RegistrationFormType extends AbstractType
                         minMessage: 'le nom doit avoir minium {{limit}} caractères',
                         max :20,
                         maxMessage: 'le nom doit avoir maximum {{limit}} caractères'
-                    )
+                    ),
+                    new Assert\NotBlank(
+                        message: 'Il faut saisir un mot de passe',
+                    ),
                 ]
             ])
             ->add('prenom', TextType::class,[
@@ -80,7 +83,10 @@ class RegistrationFormType extends AbstractType
                         minMessage: 'le prenom doit avoir minium {{limit}} caractères',
                         max :20,
                         maxMessage: 'le prenom doit avoir maximum {{limit}} caractères'
-                    )
+                    ),
+                    new Assert\NotBlank(
+                        message: 'Il faut saisir un mot de passe',
+                    ),
                 ]
             ])
         ;
