@@ -23,10 +23,11 @@ security:
                 login_path: app_login
                 check_path: app_login
                 enable_csrf: true
+                default_target_path: app_liste
             logout:
                 path: app_logout
                 # where to redirect after logout
-                # target: app_any_route
+                target: app_article_index
 
             # Activate different ways to authenticate:
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -37,7 +38,10 @@ security:
     # Note: Only the *first* matching rule is applied
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/article/new, roles: ROLE_USER }
+        # cheminement fait via expression réguliere(regex)
+        - { path: ^/article/\d+/delete, roles: ROLE_USER }
+        - { path: ^/article/\d+/edit, roles: ROLE_USER }
 
 when@test:
     security:

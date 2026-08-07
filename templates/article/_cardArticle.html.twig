@@ -1,0 +1,26 @@
+<div class="card-article">
+    <div class="img-card">
+        <img src="{{ asset('img/article/' ~ article.photo)}}" alt="image du produit {{article.titre}}">
+    </div>
+    <div class="card-content">
+        <div class="card-top">
+            <p>{{article.categorie.libelle}}</p>
+            <a href="{{ path('app_article_edit', {'id': article.id}) }}">Editer</a>
+        </div>
+        <h2 class="card-title">{{article.titre}}</h2>
+        <div class="card-auteur">
+            <p>{{article.auteur.nom}} {{article.auteur.prenom}}</p>
+            <p>Le {{article.dateCreation |date("m/d/Y")}}</p>
+        </div>
+        <div class="card-chapeau">
+            <p>{{article.chapeau}}</p>
+            <a href="{{ path('app_article_show', {'id': article.id}) }}">Lire la suite</a>
+        </div>
+        {% if app.user %}
+            <div class="card-cta">
+                <a href="">Commenter</a>
+                <a href="">Liker</a>
+            </div>
+        {% endif %}
+    </div>
+</div>

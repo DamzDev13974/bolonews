@@ -4,7 +4,11 @@
 
 {% block body %}
     <h1>Article index</h1>
-
+    {# Message d'erreur suite redirection après contrainte de modification ou suppression non respectée #}
+    {# Si le message est défini et que la variable existe et contient une vraie valeur #}
+    {% if message is defined and message is not empty %}
+        <p>{{message}}</p>
+    {% endif %}
     <table class="table">
         <thead>
             <tr>
