@@ -23,12 +23,14 @@ final class CategorieController extends AbstractController
     #[Route('/categorie/ajouter', name: 'ajouter_categorie')]
     public function ajouter(Request $Request, EntityManagerInterface $em): Response
     {
+        //Je récupère l'user connecté
+        $user = $this->getUser();
         //Je crée mon objet categorie vide
         $categorie = new Categorie();
         //Je fabrique la vue avec les champs liés à l'entité
         $form = $this->createForm(CategorieType::class, $categorie);
         //Je charge les infos saisis dans les POST(hydrade l'objet)
-         $form->handleRequest($Request);
+        $form->handleRequest($Request);
         //Si le formulaire est posté et valide
         if ($form->isSubmitted() && $form->isValid()){
             //Je traite les infos récup par l'hydration sur l'objet crée

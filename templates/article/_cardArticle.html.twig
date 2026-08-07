@@ -14,7 +14,7 @@
         </div>
         <div class="card-chapeau">
             <p>{{article.chapeau}}</p>
-            <a href="{{ path('app_article_show', {'id': article.id}) }}">Lire la suite</a>
+            <a href="{{ path('ajouter_commentaire', {'id': article.id}) }}">Lire la suite</a>
         </div>
         {% if app.user %}
             <div class="card-cta">

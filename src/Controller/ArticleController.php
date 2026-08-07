@@ -35,8 +35,6 @@ final class ArticleController extends AbstractController
         $form->handleRequest($request);
         //Je récupère l'user connecté via abstractController
         $user = $this->getUser();
-
-        
         //Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
             //Je récupère les infos du post $_FILES, pas de contrainte car photo = null possible donc pas d'obligation à la création d'article
