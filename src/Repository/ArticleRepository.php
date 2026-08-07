@@ -40,4 +40,22 @@ class ArticleRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    /**
+        * @return Article[] Returns an array of Article objects
+        */
+        public function findByWord($word): array
+        {
+            return $this->createQueryBuilder('a')
+                ->leftJoin('a.categorie','c')//Jointure de la table Catégorie
+                ->Where('a.titre LIKE :val')//Permettant la recherche dans le champ tritre de l'Article
+                ->orWhere('a.chapeau = :val')//Dans le champs chapeau de l'Article
+                ->orWhere('c.libelle LIKE :val')//Dans le champs libellé des Categorie
+                ->setParameter('val', '%' . $word . '%') //parametres de la requete
+                ->orderBy('a.titre', 'ASC')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult()
+            ;
+        }
 }

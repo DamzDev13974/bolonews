@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Bolonews</h1>
+    
+    <h2>Bienvenue sur la page de recherche</h2>
+    <form action="" method="GET">
+        <input type="text" id="search" name="search" value="{{app.request.query.get('search')}}">
+        <input type="submit"  value="🔎">
+    </form>
+    {% if search is defined and articles | length == 0 %}
+        <p>Aucun article trouvé</p>
+    {% elseif search is defined %}
+        {% for article in articles %}
+            {% include 'article/_cardArticle.html.twig' %}
+        {% endfor %}
+    {% else %}
+        <p>{{message}}</p>
+    {% endif %}
+
+{% endblock %}

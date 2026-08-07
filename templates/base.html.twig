@@ -9,6 +9,9 @@
     </head>
     <body>
         <header>
+            <a href="{{ path('app_article_index') }}">Bolonews</a>
+            <a href="{{ path('app_article_index') }}">Home</a>
+            <a href="{{ path('app_recherche') }}">Articles</a>
             {% if app.user %}
                 <a href="{{ path('app_liste') }}">Mon espace</a>
                 <a href="{{ path('app_logout') }}">Me déconnecter</a>

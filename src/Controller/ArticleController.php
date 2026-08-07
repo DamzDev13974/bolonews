@@ -181,15 +181,16 @@ final class ArticleController extends AbstractController
     //articles publiés
     $articlesPublies =[];
     foreach($articlesUser as $article){
-        //Si le champs publie est à 1(récup via le getters de l'entité article)
-        if($article->isPublie() == 1){
+        //Si le booleen publie est à 1(true)(récup via le getters de l'entité article)
+        if($article->isPublie()){
             $articlesPublies [] = $article;
         }
     }
     //articles non publiés
     $articlesNonPublies = [];
     foreach($articlesUser as $article){
-        if($article->isPublie() == 0){
+        //Si le booleen publie est à 0(false)(récup via le getters de l'entité article)
+        if(!$article->isPublie()){
             $articlesNonPublies [] = $article;
         }
     }
@@ -199,4 +200,5 @@ final class ArticleController extends AbstractController
             'articlesNonPublies' =>  $articlesNonPublies,
         ]);
     }
+    
 }
