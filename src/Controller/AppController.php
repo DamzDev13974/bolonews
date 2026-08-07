@@ -14,7 +14,10 @@ final class AppController extends AbstractController
     public function home(ArticleRepository $articleRepository): Response
     {
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            //Je récupère et envoi au template les 6 derniers articles
+            'articles' => $articleRepository->findForLast(),
+            //Je récupère et envoi au template le dernier article
+            'une'=>$articleRepository->findForUne(),
         ]);
     }
 

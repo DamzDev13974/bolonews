@@ -107,11 +107,14 @@ final class ArticleController extends AbstractController
             if ($image) {
                 //Je crée le fichier avec un nom unique
                 $nomImage = uniqid() . '.' . $image->guessExtension();
-                //Je supprime l'ancienne image
-                $file = $this->getParameter('images_articles_directory') . '/' . $article->getPhoto();
-                //Si le fichier existe on le supprime
-                if(file_exists($file)){
-                    unlink($file);
+                //Si l'article a déjà  une image
+                if($article->getPhoto()){
+                    //Je supprime l'ancienne image
+                    $file = $this->getParameter('images_articles_directory') . '/' . $article->getPhoto();
+                    //Si le fichier existe on le supprime
+                    if(file_exists($file)){
+                        unlink($file);
+                    }
                 }
                 //Je déplace la nouvelle image dans le dossier prévu
                 $image->move($this->getParameter("images_articles_directory"),$nomImage);
@@ -155,7 +158,7 @@ final class ArticleController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/dashboard', name: 'app_liste')]

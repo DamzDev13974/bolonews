@@ -9,43 +9,14 @@
     {% if message is defined and message is not empty %}
         <p>{{message}}</p>
     {% endif %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Chapeau</th>
-                <th>Contenu</th>
-                <th>Photo</th>
-                <th>Date_creation</th>
-                <th>Date_modification</th>
-                <th>Publie</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for article in articles %}
-            <tr>
-                <td>{{ article.id }}</td>
-                <td>{{ article.titre }}</td>
-                <td>{{ article.chapeau }}</td>
-                <td>{{ article.contenu }}</td>
-                <td>{{ article.photo }}</td>
-                <td>{{ article.dateCreation ? article.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ article.dateModification ? article.dateModification|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ article.publie ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
-                    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <h2>A la une</h2>
+    {% for article in une %}
+        {% include 'article/_cardArticle.html.twig' %}
+    {% endfor %}
+    <h2>Dernières parutions</h2>
+    {% for article in articles %}
+        {% include 'article/_cardArticle.html.twig' %}
+    {% endfor %}
 
     <a href="{{ path('app_article_new') }}">Create new</a>
 {% endblock %}
