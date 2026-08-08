@@ -35,7 +35,7 @@ final class CommentaireController extends AbstractController
         //Je charge les infos saisis dans les POST(hydrade l'objet)
         $form->handleRequest($request);
         //Je récupère la listes des commentaires déjà présents
-        $commentaires = $commentaireRepository->findAll();
+        $commentaires = $commentaires = $article->getCommentaires();
         //Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
             //Je valorise l'attribut auteur

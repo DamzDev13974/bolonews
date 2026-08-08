@@ -10,15 +10,15 @@
         <h2 class="card-title">{{article.titre}}</h2>
         <div class="card-auteur">
             <p>{{article.auteur.nom}} {{article.auteur.prenom}}</p>
-            <p>Le {{article.dateCreation |date("m/d/Y")}}</p>
+            <p>Le {{article.dateCreation | date("m/d/Y")}}</p>
         </div>
         <div class="card-chapeau">
             <p>{{article.chapeau}}</p>
-            <a href="{{ path('ajouter_commentaire', {'id': article.id}) }}">Lire la suite</a>
+            <a href="{{ path('app_article_show', {'id': article.id}) }}">Lire la suite</a>
         </div>
         {% if app.user %}
             <div class="card-cta">
-                <a href="">Commenter</a>
+                <a href="{{ path('ajouter_commentaire', {'id': article.id}) }}">Commenter</a>
                 <a href="">Liker</a>
             </div>
         {% endif %}

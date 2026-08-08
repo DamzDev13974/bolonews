@@ -75,8 +75,8 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/detail', name: 'app_article_show', methods: ['GET', 'POST'])]
-    public function show(Article $article, Request $request, EntityManagerInterface $em, CommentaireRepository  $commentaireRepository): Response
+    #[Route('/{id}/detail', name: 'app_article_show', methods: ['GET'])]
+    public function show(Article $article, Request $request, CommentaireRepository  $commentaireRepository): Response
     {   
         //Je récupère l'user connecté
         $user = $this->getUser();
@@ -84,30 +84,8 @@ final class ArticleController extends AbstractController
         $commentaire = new Commentaire();
         //Je fabrique la vue avec les champs liés à l'entité Commentaire
         $form = $this->createForm(CommentaireType::class, $commentaire);
-        //Je charge les infos saisis dans les POST(hydrade l'objet)
-        $form->handleRequest($request);
-        //Je récupère la listes des commentaires déjà présents
-        $commentaires = $commentaireRepository->findAll();
-        //Si le formulaire est soumis et valide
-        if ($form->isSubmitted() && $form->isValid()) {
-            //Je valorise l'attribut auteur
-            $commentaire->setAuteur($user);
-            //Je récupère la date actuelle avec l'objet DateTime
-            $dateActuelle = new DateTime();
-            //Je valorise la date de création et modification
-            $commentaire->setDateCreation($dateActuelle);
-            //Je valorise l'article commenté via le setters et la relation avec article
-            $commentaire->setArticle($article);
-            $em->persist($commentaire);
-            //Execute les requetes et enregistre dans la base
-            $em->flush();
-            //Je redirige vers la page de l'article crée
-            return $this->redirectToRoute('app_article_show',[
-                'id'=> $article->getId(),
-            ]);
-
-        }
-
+        //Je récupère la listes des commentaires déjà présents sur l'article
+        $commentaires = $article->getCommentaires();
         return $this->render('article/show.html.twig', [
             'article' => $article,
             'form'=>$form,

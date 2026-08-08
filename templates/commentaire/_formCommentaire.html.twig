@@ -1,5 +1,9 @@
 <div class="comm-space">
-    {{form_start(form, { attr: { novalidate: 'novalidate' } }) }}
+    {{form_start(form, { 
+        'attr': { novalidate: 'novalidate' },
+        'action': path('ajouter_commentaire', {'id': article.id}),
+        'method': 'POST',
+    }) }}
         {{ form_widget(form) }}
     {{ form_end(form) }}
 </div>
