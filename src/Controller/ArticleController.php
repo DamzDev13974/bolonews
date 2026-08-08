@@ -78,8 +78,7 @@ final class ArticleController extends AbstractController
     #[Route('/{id}/detail', name: 'app_article_show', methods: ['GET'])]
     public function show(Article $article, Request $request, CommentaireRepository  $commentaireRepository): Response
     {   
-        //Je récupère l'user connecté
-        $user = $this->getUser();
+        
         //Je crée mon objet commentaire vide
         $commentaire = new Commentaire();
         //Je fabrique la vue avec les champs liés à l'entité Commentaire
@@ -164,7 +163,10 @@ final class ArticleController extends AbstractController
                 $message = "Vous n'êtes pas l'auteur de cet article";
                 return $this->render('article/index.html.twig',[
                     'message'=>$message,
-                    'articles' => $articleRepository->findAll(),
+                    //Je récupère et envoi au template les 6 derniers articles
+                    'articles' => $articleRepository->findForLast(),
+                    //Je récupère et envoi au template le dernier article
+                    'une'=>$articleRepository->findForUne(),
                 ]);
             }
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->getPayload()->getString('_token'))) {

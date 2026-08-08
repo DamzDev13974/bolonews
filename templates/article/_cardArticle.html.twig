@@ -16,11 +16,9 @@
             <p>{{article.chapeau}}</p>
             <a href="{{ path('app_article_show', {'id': article.id}) }}">Lire la suite</a>
         </div>
-        {% if app.user %}
-            <div class="card-cta">
-                <a href="{{ path('ajouter_commentaire', {'id': article.id}) }}">Commenter</a>
-                <a href="{{ path('app_like', {'id': article.id}) }}">Liker</a>
-            </div>
-        {% endif %}
+        <div class="card-cta">
+            <a href="{{ path('ajouter_commentaire', {'id': article.id}) }}">Commenter {{article.commentaires|length }}</a>
+            <a href="{{ path('app_like', {'id': article.id}) }}"> Liker {{ article.likeBy|length}}</a>
+        </div>
     </div>
 </div>

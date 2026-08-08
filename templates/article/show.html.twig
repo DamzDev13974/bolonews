@@ -25,7 +25,9 @@
             </tr>
             <tr>
                 <th>Photo</th>
-                <td>{{ article.photo }}</td>
+                <td>
+                    <img src="{{ asset('img/article/' ~ article.photo)}}" alt="image du produit {{article.titre}}">
+                </td>
             </tr>
             <tr>
                 <th>Date_creation</th>
@@ -41,6 +43,7 @@
             </tr>
         </tbody>
     </table>
+    
 
     <a href="{{ path('app_home') }}">back to list</a>
 
