@@ -42,6 +42,7 @@ security:
         # cheminement fait via expression réguliere(regex)
         - { path: ^/article/\d+/delete, roles: ROLE_USER }
         - { path: ^/article/\d+/edit, roles: ROLE_USER }
+        - { path: ^/article/\d+/like, roles: ROLE_USER }
         - { path: ^/categorie, roles: ROLE_USER }
         - { path: ^/commentaire, roles: ROLE_USER }
 
