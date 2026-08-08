@@ -218,4 +218,27 @@ final class ArticleController extends AbstractController
         ]);
     }
     
+    #[Route('/{id}/like', name: 'app_like')]
+    public function like(EntityManagerInterface $em, Request $request, Article $article): Response
+    {
+        //Je récupere l'user connecté
+        $user = $this->getUser();
+        //Je récupère la liste des user qui ont liké cet article
+        $likes = $article->getLikeBy();
+        //Si l'user est déjà dedans, il est enlevé de la relation (dislike)
+        if($likes->contains($user)){
+            //via la methode faite par Symfo et la relation
+            $article->removeLikeBy($user);
+        }else{
+            //Sinon je l'ajoute dans la table associative (like)
+            //via la methode faite par Symfo et la relation
+            $article->addLikeBy($user);
+        };
+        //J'enregistre la modification de relation
+        $em->flush();
+        
+        //Je redirige vers la page où le like a été cliqué(via l'entete http)
+        return $this->redirect($request->headers->get('referer'));
+    }
+
 }

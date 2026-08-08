@@ -19,7 +19,7 @@
         {% if app.user %}
             <div class="card-cta">
                 <a href="{{ path('ajouter_commentaire', {'id': article.id}) }}">Commenter</a>
-                <a href="">Liker</a>
+                <a href="{{ path('app_like', {'id': article.id}) }}">Liker</a>
             </div>
         {% endif %}
     </div>

@@ -79,9 +79,16 @@ class Article
     #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'article')]
     private Collection $commentaires;
 
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class)]
+    private Collection $likeBy;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
+        $this->likeBy = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -223,6 +230,30 @@ class Article
                 $commentaire->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getLikeBy(): Collection
+    {
+        return $this->likeBy;
+    }
+
+    public function addLikeBy(User $likeBy): static
+    {
+        if (!$this->likeBy->contains($likeBy)) {
+            $this->likeBy->add($likeBy);
+        }
+
+        return $this;
+    }
+
+    public function removeLikeBy(User $likeBy): static
+    {
+        $this->likeBy->removeElement($likeBy);
 
         return $this;
     }
