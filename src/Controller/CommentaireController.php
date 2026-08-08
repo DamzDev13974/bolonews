@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Commentaire;
 use App\Form\CommentaireType;
+use App\Repository\CommentaireRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +24,7 @@ final class CommentaireController extends AbstractController
     }
 
     #[Route('/commentaire/ajouter/{id}', name: 'ajouter_commentaire')]
-    public function ajouter(Request $request, EntityManagerInterface $em, Article $article): Response
+    public function ajouter(Request $request, EntityManagerInterface $em, Article $article, CommentaireRepository  $commentaireRepository): Response
     {
         //Je récupère l'user connecté
         $user = $this->getUser();
@@ -33,6 +34,8 @@ final class CommentaireController extends AbstractController
         $form = $this->createForm(CommentaireType::class, $commentaire);
         //Je charge les infos saisis dans les POST(hydrade l'objet)
         $form->handleRequest($request);
+        //Je récupère la listes des commentaires déjà présents
+        $commentaires = $commentaireRepository->findAll();
         //Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
             //Je valorise l'attribut auteur
@@ -43,7 +46,7 @@ final class CommentaireController extends AbstractController
             $commentaire->setDateCreation($dateActuelle);
             //Je valorise l'article commenté via le setters et la relation avec article
             $commentaire->setArticle($article);
-            $em->persist($article);
+            $em->persist($commentaire);
             //Execute les requetes et enregistre dans la base
             $em->flush();
             //Je redirige vers la page de l'article crée
@@ -57,6 +60,7 @@ final class CommentaireController extends AbstractController
         return $this->render('article/show.html.twig', [
             'article' => $article,
             'form' => $form,
+            'commentaires'=>$commentaires,
         ]);
     }
 }

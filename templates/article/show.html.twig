@@ -47,6 +47,10 @@
     <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
 
     {% if app.user %}
+        <h2>Commentaires</h2>
+        {% for commentaire in commentaires %}
+            {% include 'commentaire/_divCommentaire.html.twig' %}
+        {% endfor %}
         {% include 'commentaire/_formCommentaire.html.twig' %}
     {% endif %}
 
