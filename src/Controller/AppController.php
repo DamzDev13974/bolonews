@@ -17,6 +17,9 @@ final class AppController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function home(ArticleRepository $articleRepository): Response
     {
+        /* =================================
+        Role : affiche la page d'accueil du site avec l'article à la une et les 4 derniers publiés
+        ====================================*/
         return $this->render('article/index.html.twig', [
             //Je récupère et envoi au template les 6 derniers articles
             'articles' => $articleRepository->findForLast(),
@@ -28,6 +31,10 @@ final class AppController extends AbstractController
     #[Route('/rechercher', name: 'app_recherche', methods: ['GET']) ]
     public function rechercher(ArticleRepository $articleRepository, Request $Request): Response
     {
+        /* =================================
+        Role : affiche la page Articles et permet de rechercher des articles par mot-clé.
+        ====================================*/
+
         //Je récupère le mot saisie pour la recherche
         $word= trim($Request->query->get("search"));
         //Si un mot a été tapé et validé dans la recherche
@@ -51,6 +58,9 @@ final class AppController extends AbstractController
     #[Route('/{id}/detail', name: 'app_article_show', methods: ['GET'])]
     public function show(Article $article, Request $request, CommentaireRepository  $commentaireRepository): Response
     {   
+        /* =================================
+        Role : affiche la page avec les détails d'un article
+        ====================================*/
         
         //Je crée mon objet commentaire vide
         $commentaire = new Commentaire();
@@ -68,6 +78,10 @@ final class AppController extends AbstractController
     #[Route('/login-redirection', name: 'app_login_redirection')]
     public function redirectionLogDashboard(): Response
     {
+        /* =================================
+        Role : route permettant la redirection sur le bon dashboard selon le role de l'user qui vient de se connecter
+        ====================================*/
+
         //Si l'utilisateur connecté est un ADMIN
         if ($this->isGranted('ROLE_ADMIN')){
             //Je redirige vers le dashboard ADMIN

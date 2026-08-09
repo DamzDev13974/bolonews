@@ -23,6 +23,10 @@ final class CategorieController extends AbstractController
     #[Route('/categorie/ajouter', name: 'ajouter_categorie')]
     public function ajouter(Request $Request, EntityManagerInterface $em): Response
     {
+        /* =================================
+        Role : permet d'ajouter une nouvelle catégorie d'article
+        ====================================*/
+
         //Je récupère l'user connecté
         $user = $this->getUser();
         //Je crée mon objet categorie vide

@@ -20,6 +20,10 @@ final class AdminController extends AbstractController
     #[Route( name: 'app_admin_liste')]
     public function index(UserRepository $userRepository, ArticleRepository $articleRepository): Response
     {
+        /* =================================
+        Role : affiche le dashboard de l'admin connecté avec ses articles publiés et non publiés, tout les articles et les users
+        ====================================*/
+
         /* =============Partie pour usage similaire à role_user=================== */
         //Je récupère les articles de l'admin pour la section comme un user co classique
         //Je récupère l'utilisateur connecté
@@ -66,6 +70,10 @@ final class AdminController extends AbstractController
     #[Route('/{id}/edit', name: 'app_admin_article_edit')]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
+        /* =================================
+        Role : permet à l'admin de modifier un article
+        ====================================*/
+
             //Je récupère l'user connecté via abstractController
         $user = $this->getUser();
         //Je fabrique la vue avec les champs liés à l'entité Article
@@ -114,6 +122,9 @@ final class AdminController extends AbstractController
     #[Route('/{id}/delete', name: 'app__admin_article_delete', methods: ['POST'])]
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {   
+        /* =================================
+        Role : permet à l'admin de supprimer un article
+        ====================================*/
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($article);
             $entityManager->flush();
@@ -125,6 +136,10 @@ final class AdminController extends AbstractController
     #[Route('/{id}/user/delete', name: 'app_admin_user_delete', methods: ['POST'])]
     public function deleteUser(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
+        /* =================================
+        Role : permet à l'admin de supprimer un user
+        ====================================*/
+
         //Je reprends le même fonctionnement que pour la suppression d'un article 
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($user);
@@ -136,7 +151,11 @@ final class AdminController extends AbstractController
     
     #[Route('/{id}/ban', name: 'app_ban_user')]
     public function bannir(Request $request, User $user, EntityManagerInterface $em): Response
-    {
+    {   
+        /* =================================
+        Role : permet à l'admin de bannir ou débannir un user
+        ====================================*/
+
         //Si l'user n'est pas banni, je ban (passe son champ "banni" à 1)
             if(!$user->isBanni()){
                 $user->setBanni(true);
@@ -150,5 +169,26 @@ final class AdminController extends AbstractController
 
         //Je redirige vers le dashboard ADMIN
         return $this->redirectToRoute('app_admin_liste');
+    }
+
+    #[Route('/{id}/publier', name: 'app_publier')]
+    public function publier(EntityManagerInterface $em, Request $request, Article $article, ArticleRepository $articleRepository): Response
+    {
+        /* =================================
+        Role : permet à l'admin de publier ou dépublier un article
+        ====================================*/
+
+        //Si l'article est publié, je dépublie
+        if($article->isPublie()){
+            $article->setPublie(false);
+        }else{
+            $article->setPublie(true);
+        }
+        //J'enregistre les modification 
+        $em->flush();
+        //Je redirige vers la page détails de l'article modifié
+        return $this->redirectToRoute('app_article_show',[
+            'id'=> $article->getId(),
+        ]);
     }
 }

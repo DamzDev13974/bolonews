@@ -26,6 +26,10 @@ final class CommentaireController extends AbstractController
     #[Route('/commentaire/ajouter/{id}', name: 'ajouter_commentaire')]
     public function ajouter(Request $request, EntityManagerInterface $em, Article $article, CommentaireRepository  $commentaireRepository): Response
     {
+        /* =================================
+        Role : permet à un user connecté d'ajouter un commentaire à l'article correspondant
+        ====================================*/
+
         //Je récupère l'user connecté
         $user = $this->getUser();
         //Je crée mon objet commentaire vide

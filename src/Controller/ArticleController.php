@@ -27,6 +27,10 @@ final class ArticleController extends AbstractController
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        /* =================================
+        Role : permet à un user connecté de créer un article
+        ====================================*/
+
         //Je crée mon objet Article vide
         $article = new Article();
         //Je fabrique la vue avec les champs liés à l'entité Article
@@ -76,6 +80,10 @@ final class ArticleController extends AbstractController
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager, ArticleRepository $articleRepository): Response
     {
+        /* =================================
+        Role : permet à l'auteur de l'article de modifier celui ci
+        ====================================*/
+
         //Je récupère l'user connecté via abstractController
         $user = $this->getUser();
         //Je vérifie que l'user connecté est bien l'auteur de l'article
@@ -137,6 +145,10 @@ final class ArticleController extends AbstractController
     #[Route('/{id}/delete', name: 'app_article_delete', methods: ['POST'])]
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager,ArticleRepository $articleRepository): Response
     {   
+        /* =================================
+        Role : permet à l'auteur de l'article de supprimer celui ci
+        ====================================*/
+
         //Je récupère l'user connecté
         $user = $this->getUser();
         //Si l'user connecté n'est pas l'auteurde l'article
@@ -162,6 +174,11 @@ final class ArticleController extends AbstractController
     #[Route('/dashboard', name: 'app_liste')]
     public function liste(UserRepository $userRepository, ArticleRepository $articleRepository): Response
     {
+    /* =================================
+    Role : affiche le dashboard de l'utilisateur connecté avec ses articles publiés et non publiés
+    ====================================*/
+
+
     //Récupèrela liste des articles de l'utilisateur connecté
     //Je récupère l'utilisateur connecté
     $user = $this->getUser();
@@ -205,6 +222,9 @@ final class ArticleController extends AbstractController
     #[Route('/{id}/like', name: 'app_like')]
     public function like(EntityManagerInterface $em, Request $request, Article $article): Response
     {
+        /* =================================
+        Role : permet à l'user connecté de liker ou déliker un article
+        ====================================*/
         //Je récupere l'user connecté
         $user = $this->getUser();
         //Je récupère la liste des user qui ont liké cet article
@@ -225,4 +245,37 @@ final class ArticleController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
 
+    #[Route('/{id}/publier', name: 'app_publier')]
+    public function publier(EntityManagerInterface $em, Request $request, Article $article, ArticleRepository $articleRepository): Response
+    {
+        /* =================================
+        Role : permet à l'user connecté de publier ou dépublier un article
+        ====================================*/
+
+        //Je récupère l'user connecté
+        $user = $this->getUser();
+        if($article->getAuteur() !== $user){
+            //Si il n'est pas l'auteur de l'article,je redirige vers la page d'accueil avec un message d'erreur
+            $message = "Vous n'êtes pas l'auteur de cet article";
+            return $this->render('article/index.html.twig',[
+                'message'=>$message,
+                //Je récupère et envoi au template les 6 derniers articles
+                'articles' => $articleRepository->findForLast(),
+                //Je récupère et envoi au template le dernier article
+                'une'=>$articleRepository->findForUne(),
+            ]);
+        }
+        //Si l'article est publié, je dépublie
+        if($article->isPublie()){
+            $article->setPublie(false);
+        }else{
+            $article->setPublie(true);
+        }
+        //J'enregistre les modification 
+        $em->flush();
+        //Je redirige vers la page détails de l'article modifié
+        return $this->redirectToRoute('app_article_show',[
+            'id'=> $article->getId(),
+        ]);
+    }
 }
