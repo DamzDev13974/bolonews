@@ -5,7 +5,11 @@
     <div class="card-content">
         <div class="card-top">
             <p>{{article.categorie.libelle}}</p>
-            <a href="{{ path('app_article_edit', {'id': article.id}) }}">Editer</a>
+            {% if is_granted("ROLE_ADMIN") %}
+                <a href="{{ path('app_admin_article_edit', {'id': article.id}) }}">Editer</a>
+            {% elseif app.user %}
+                <a href="{{ path('app_article_edit', {'id': article.id}) }}">Editer</a>
+            {% endif %}
         </div>
         <h2 class="card-title">{{article.titre}}</h2>
         <div class="card-auteur">

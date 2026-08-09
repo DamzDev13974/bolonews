@@ -78,22 +78,23 @@ final class ArticleController extends AbstractController
     {
         //Je récupère l'user connecté via abstractController
         $user = $this->getUser();
+        //Je vérifie que l'user connecté est bien l'auteur de l'article
+        if($article->getAuteur() !== $user){
+            //Si il n'est pas l'auteur de l'article,je redirige vers la page d'accueil avec un message d'erreur
+            $message = "Vous n'êtes pas l'auteur de cet article";
+            return $this->render('article/index.html.twig',[
+                'message'=>$message,
+                //Je récupère et envoi au template les 6 derniers articles
+                'articles' => $articleRepository->findForLast(),
+                //Je récupère et envoi au template le dernier article
+                'une'=>$articleRepository->findForUne(),
+            ]);
+        }
         //Je fabrique la vue avec les champs liés à l'entité Article
         $form = $this->createForm(ArticleType::class, $article);
         //Je charge les informations saisis dans les POST(hydrate l'objet) et rempli les valeurs des attributs
         $form->handleRequest($request);
-        //Je vérifie que l'user connecté est bien l'auteur de l'article
-            if($article->getAuteur() !== $user){
-                //Si il n'est pas l'auteur de l'article,je redirige vers la page d'accueil avec un message d'erreur
-                $message = "Vous n'êtes pas l'auteur de cet article";
-                return $this->render('article/index.html.twig',[
-                    'message'=>$message,
-                    //Je récupère et envoi au template les 6 derniers articles
-                    'articles' => $articleRepository->findForLast(),
-                    //Je récupère et envoi au template le dernier article
-                    'une'=>$articleRepository->findForUne(),
-                ]);
-            }
+       
         if ($form->isSubmitted() && $form->isValid()) {
             //Je récupère la nouvelle image si modifiée($_FILES)
             $image = $form->get('photo')->getData();

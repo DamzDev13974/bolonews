@@ -7,7 +7,14 @@
         <p>{{user.prenom}}</p>
     </div>
     <div class="card-cta-user">
-        <a href="">Bannir l'utilisateur</a>
-        <a href="">Supprimer l'utilisateur</a>
+        {% if user.banni %}
+            <a href="{{ path('app_ban_user', {'id': user.id}) }}">Débannir l'utilisateur</a>
+        {% else %}
+            <a href="{{ path('app_ban_user', {'id': user.id}) }}">Bannir l'utilisateur</a>
+        {% endif %}
+            <form method="post" action="{{ path('app_admin_user_delete', {'id': user.id}) }}" onsubmit="return confirm('Etes vous sur de vouloir supprimer cette utilisateur ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+            <button class="btn">Delete</button>
+        </form>
     </div>
 </div>

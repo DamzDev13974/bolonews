@@ -2,9 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use App\Entity\User;
+use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use App\Repository\UserRepository;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -55,5 +61,94 @@ final class AdminController extends AbstractController
             'articles' => $articles,
             'users' => $users,
         ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_admin_article_edit')]
+    public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
+    {
+            //Je récupère l'user connecté via abstractController
+        $user = $this->getUser();
+        //Je fabrique la vue avec les champs liés à l'entité Article
+        $form = $this->createForm(ArticleType::class, $article);
+        //Je charge les informations saisis dans les POST(hydrate l'objet) et rempli les valeurs des attributs
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            //Je récupère la nouvelle image si modifiée($_FILES)
+            $image = $form->get('photo')->getData();
+            //Si il y a une nouvelle image
+            if ($image) {
+                //Je crée le fichier avec un nom unique
+                $nomImage = uniqid() . '.' . $image->guessExtension();
+                //Si l'article a déjà  une image
+                if($article->getPhoto()){
+                    //Je supprime l'ancienne image
+                    $file = $this->getParameter('images_articles_directory') . '/' . $article->getPhoto();
+                    //Si le fichier existe on le supprime
+                    if(file_exists($file)){
+                        unlink($file);
+                    }
+                }
+                //Je déplace la nouvelle image dans le dossier prévu
+                $image->move($this->getParameter("images_articles_directory"),$nomImage);
+                //Je valorise l'attribut image avec la nouvelle photo
+                $article->setPhoto($nomImage);
+            }
+            //Je modifie la date_modification
+            //Je récupère la date actuelle avec l'objet DateTime
+            $dateActuelle = new DateTime();
+            $article->setDateModification($dateActuelle);
+            //Execute les requetes et enregistre dans la base
+            $entityManager->flush();
+            //Je redirige vers la page détails de l'article modifié
+            return $this->redirectToRoute('app_article_show',[
+                'id'=> $article->getId(),
+            ]);
+        }
+        //Sinon j'affiche le formulaire ou formulaire invalide
+        return $this->render('article/edit.html.twig', [
+            'article' => $article,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/delete', name: 'app__admin_article_delete', methods: ['POST'])]
+    public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
+    {   
+        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($article);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/user/delete', name: 'app_admin_user_delete', methods: ['POST'])]
+    public function deleteUser(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        //Je reprends le même fonctionnement que pour la suppression d'un article 
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_admin_liste', [], Response::HTTP_SEE_OTHER);
+    }
+    
+    #[Route('/{id}/ban', name: 'app_ban_user')]
+    public function bannir(Request $request, User $user, EntityManagerInterface $em): Response
+    {
+        //Si l'user n'est pas banni, je ban (passe son champ "banni" à 1)
+            if(!$user->isBanni()){
+                $user->setBanni(true);
+            }else{
+        //Sinon je déban (passe son champ "banni" à 0)
+                $user->setBanni(false);
+            }
+        
+        //J'enregistre les modification 
+        $em->flush();
+
+        //Je redirige vers le dashboard ADMIN
+        return $this->redirectToRoute('app_admin_liste');
     }
 }

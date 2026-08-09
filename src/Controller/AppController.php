@@ -68,10 +68,13 @@ final class AppController extends AbstractController
     #[Route('/login-redirection', name: 'app_login_redirection')]
     public function redirectionLogDashboard(): Response
     {
+        //Si l'utilisateur connecté est un ADMIN
         if ($this->isGranted('ROLE_ADMIN')){
+            //Je redirige vers le dashboard ADMIN
             return $this->redirectToRoute('app_admin_liste');
         }
 
+        //Sinon vers le dashboard user classique
         return $this->redirectToRoute('app_liste');
     }
 }

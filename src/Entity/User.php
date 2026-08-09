@@ -57,6 +57,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'auteur')]
     private Collection $commentaires;
 
+    #[ORM\Column]
+    //mise par défaut à false à la création d'un user
+    private ?bool $banni = false;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -236,6 +240,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $commentaire->setAuteur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isBanni(): ?bool
+    {
+        return $this->banni;
+    }
+
+    public function setBanni(bool $banni): static
+    {
+        $this->banni = $banni;
 
         return $this;
     }
