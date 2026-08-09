@@ -3,11 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use App\Entity\Commentaire;
 use App\Form\ArticleType;
-use App\Form\CommentaireType;
 use App\Repository\ArticleRepository;
-use App\Repository\CommentaireRepository;
 use App\Repository\UserRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -75,22 +72,6 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/detail', name: 'app_article_show', methods: ['GET'])]
-    public function show(Article $article, Request $request, CommentaireRepository  $commentaireRepository): Response
-    {   
-        
-        //Je crée mon objet commentaire vide
-        $commentaire = new Commentaire();
-        //Je fabrique la vue avec les champs liés à l'entité Commentaire
-        $form = $this->createForm(CommentaireType::class, $commentaire);
-        //Je récupère la listes des commentaires déjà présents sur l'article
-        $commentaires = $article->getCommentaires();
-        return $this->render('article/show.html.twig', [
-            'article' => $article,
-            'form'=>$form,
-            'commentaires'=>$commentaires,
-        ]);
-    }
 
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager, ArticleRepository $articleRepository): Response

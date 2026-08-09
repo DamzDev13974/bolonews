@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use App\Entity\Commentaire;
+use App\Form\CommentaireType;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentaireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,5 +46,32 @@ final class AppController extends AbstractController
         return $this->render('article/recherche.html.twig',[
             "message"=>$message,
         ]);
+    }
+
+    #[Route('/{id}/detail', name: 'app_article_show', methods: ['GET'])]
+    public function show(Article $article, Request $request, CommentaireRepository  $commentaireRepository): Response
+    {   
+        
+        //Je crée mon objet commentaire vide
+        $commentaire = new Commentaire();
+        //Je fabrique la vue avec les champs liés à l'entité Commentaire
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+        //Je récupère la listes des commentaires déjà présents sur l'article
+        $commentaires = $article->getCommentaires();
+        return $this->render('article/show.html.twig', [
+            'article' => $article,
+            'form'=>$form,
+            'commentaires'=>$commentaires,
+        ]);
+    }
+
+    #[Route('/login-redirection', name: 'app_login_redirection')]
+    public function redirectionLogDashboard(): Response
+    {
+        if ($this->isGranted('ROLE_ADMIN')){
+            return $this->redirectToRoute('app_admin_liste');
+        }
+
+        return $this->redirectToRoute('app_liste');
     }
 }

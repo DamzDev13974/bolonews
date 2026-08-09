@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord administrateur{% endblock %}
+
+{% block body %}
+    <h1>Mon tableau de bord ADMIN</h1>
+    <div class="cta-create">
+        <a href="{{ path('app_article_new') }}">Créer un nouvel article</a>
+    </div>
+    <section class="publied">
+        <h2>Mes articles publiés</h2>
+        {% for article in articlesPublies %}
+            {% include 'article/_cardArticle.html.twig' %}
+        {% endfor %}
+    </section>
+    <section class="not-publied">
+        <h2>Mes articles non publiés</h2>
+        {% for article in articlesNonPublies %}
+            {% include 'article/_cardArticle.html.twig' %}
+        {% endfor %}
+    </section>
+    <section class="admin-role">
+        <div class="liste-all-article">
+            <h2>Tous les articles (publiés ou non) </h2>
+            {% for article in articles %}
+                {% include 'article/_cardArticle.html.twig' %}
+            {% endfor %}
+        </div>
+        <div class="liste-user">
+            <h2>Liste des utilisateurs crées</h2>
+            {% for  user in users %}
+                {% include 'admin/_divCardUser.html.twig' %}
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

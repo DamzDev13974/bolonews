@@ -1,0 +1,13 @@
+<div class="card-user">
+    <div class="img-card-user">
+        <img src="{{ asset('img/' ~ user.photo)}}" alt="image de l'user {{user.nom}} {{user.prenom}}">
+    </div>
+    <div class="card-infos">
+        <p>{{user.nom}}</p>
+        <p>{{user.prenom}}</p>
+    </div>
+    <div class="card-cta-user">
+        <a href="">Bannir l'utilisateur</a>
+        <a href="">Supprimer l'utilisateur</a>
+    </div>
+</div>

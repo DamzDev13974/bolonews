@@ -13,7 +13,10 @@
             <a href="{{ path('app_home') }}">Bolonews</a>
             <a href="{{ path('app_home') }}">Home</a>
             <a href="{{ path('app_recherche') }}">Articles</a>
-            {% if app.user %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('app_admin_liste') }}">Mon espace</a>
+                <a href="{{ path('app_logout') }}">Me déconnecter</a>
+            {% elseif app.user  %}
                 <a href="{{ path('app_liste') }}">Mon espace</a>
                 <a href="{{ path('app_logout') }}">Me déconnecter</a>
             {% else %}
