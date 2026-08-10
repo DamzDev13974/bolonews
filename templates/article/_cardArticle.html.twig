@@ -1,38 +1,41 @@
 <div class="card-article">
     <div class="img-card">
-        <img src="{{ asset('img/article/' ~ article.photo)}}" alt="image du produit {{article.titre}}">
+        <img src="{{ asset('img/article/' ~ article.photo)}}" alt="image de l'article {{article.titre}}">
     </div>
     <div class="card-content">
         <div class="card-top">
             <p>{{article.categorie.libelle}}</p>
             {% if is_granted("ROLE_ADMIN") %}
-                <a href="{{ path('app_admin_article_edit', {'id': article.id}) }}">Editer</a>
+                <a href="{{ path('app_admin_article_edit', {'id': article.id}) }}" class="btn-edit" aria-label="Aller sur la page de modification de l'article {{article.titre}}" title="Aller sur la page de modification de l'article {{article.titre}}">Editer</a>
                 {% if article.publie %}
-                    <a href="{{ path('app_publier', {'id': article.id}) }}">Dépublier</a>
+                    <a href="{{ path('app_publier', {'id': article.id}) }}" class="btn-unpublish" aria-label="Dépublier l'article {{article.titre}} " title="Dépublier l'article {{article.titre}}">Dépublier</a>
                 {% else %}
-                    <a href="{{ path('app_publier', {'id': article.id}) }}">Publier</a>
+                    <a href="{{ path('app_publier', {'id': article.id}) }}" class="btn-publish" aria-label="Publier l'article {{article.titre}} " title="Publier l'article {{article.titre}}">Publier</a>
                 {% endif %}
             {% elseif app.user and article.auteur == app.user %}
-                <a href="{{ path('app_article_edit', {'id': article.id}) }}">Editer</a>
+                <a href="{{ path('app_article_edit', {'id': article.id}) }} " class="btn-edit" aria-label="Aller sur la page de modification de l'article {{article.titre}}" title="Aller sur la page de modification de l'article {{article.titre}}">Editer</a>
                 {% if article.publie %}
-                    <a href="{{ path('app_publier', {'id': article.id}) }}">Dépublier</a>
+                    <a href="{{ path('app_publier', {'id': article.id}) }}" class="btn-unpublish" aria-label="Dépublier l'article {{article.titre}} " title="Dépublier l'article {{article.titre}}">Dépublier</a>
                 {% else %}
-                    <a href="{{ path('app_publier', {'id': article.id}) }}">Publier</a>
+                    <a href="{{ path('app_publier', {'id': article.id}) }}" class="btn-publish" aria-label="Publier l'article {{article.titre}} " title="Publier l'article {{article.titre}}">Publier</a>
                 {% endif %}
             {% endif %}
         </div>
-        <h2 class="card-title">{{article.titre}}</h2>
-        <div class="card-auteur">
-            <p>{{article.auteur.nom}} {{article.auteur.prenom}}</p>
-            <p>Le {{article.dateCreation | date("m/d/Y")}}</p>
-        </div>
+        <h3 class="card-title">{{article.titre}}</h3>
         <div class="card-chapeau">
             <p>{{article.chapeau}}</p>
-            <a href="{{ path('app_article_show', {'id': article.id}) }}">Lire la suite</a>
+            <a href="{{ path('app_article_show', {'id': article.id}) }}" aria-label="Aller sur la page détails de l'article {{article.titre}}" title="Aller sur la page détails de l'article {{article.titre}}">Lire la suite {{ ux_icon('ph:arrow-right-thin') }}</a>
+        </div>
+        <div class="card-auteur">
+            <img src="{{ asset('img/' ~ article.auteur.photo)}}" alt="image de l'auteur {{article.auteur.nom}} {{article.auteur.prenom}}">
+            <p>{{article.auteur.nom}} {{article.auteur.prenom}}</p>
         </div>
         <div class="card-cta">
-            <a href="{{ path('ajouter_commentaire', {'id': article.id}) }}">Commenter {{article.commentaires|length }}</a>
-            <a href="{{ path('app_like', {'id': article.id}) }}"> Liker {{ article.likeBy|length}}</a>
+            <p>Publié le {{article.dateCreation | date("m/d/Y")}}</p>
+            <div class="card-social">
+                <a href="{{ path('ajouter_commentaire', {'id': article.id}) }}">{{ ux_icon('ph:chat-circle') }} {{article.commentaires|length }}</a>
+                <a href="{{ path('app_like', {'id': article.id}) }}"> {{ ux_icon('ph:heart') }} {{ article.likeBy|length}}</a>
+            </div>
         </div>
     </div>
 </div>

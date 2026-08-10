@@ -1,4 +1,249 @@
+/* ************Reset et base*************** */
+*{
+    font-family: "Merriweather", serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+.top-container{
+    width: 90%;
+    margin: auto;
+}
+
+.small-container{
+    width: 70%;
+    margin: auto;
+}
+
+/* ***************Header************* */
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    a{
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #000000;
+        letter-spacing: 1px;
+    }
+}
+
+ul.nav-header {
+    display: flex;
+    gap: 2rem;
+}
+
+.cta-header {
+    display: flex;
+    gap: 2rem;
+}
+
+/* ***********************Hero ****************** */
+
+
+section.hero-content.top-container {
+    margin-bottom: 4rem;
+    text-align: center;
+    a{
+        color: #000000;
+        font-size: 4.75rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    p{
+        font-family: "Inter", sans-serif;
+        font-size: 0.9rem
+    }
+}
+
+.separator {
+    width: 100%;
+    height: 1px;
+    background-color: #000000;
+    margin: 1rem 0;
+}
+
+/* ========================= Accueil ========================= */
+.error-index{
+    color: red;
+    text-align: center;
+}
+h1, h2{
+    margin-top: 2rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* *********************Card********************* */
+
 .card-article {
+    display: flex;
+    min-height: 11rem;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+/* ***********coté gauche******************** */
+
+.img-card {
+    width: 8rem;
+    min-width: 8rem;
+    height: 11rem;
+    overflow: hidden;
+    border-radius: 0.3rem;
+    img{
+        object-fit: cover;
+        height: 100%;
+    }
+}
+
+/* ************** coté droit **************** */
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap:0.5rem;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    p{
+        font-family: "Lato", sans-serif;
+        font-size: 0.75rem;
+        background-color: #DBDBDB;
+        border-radius: 0.2rem;
+        padding: 0.2rem 0.4rem;
+    }
+}
+
+.card-title{
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+
+.card-auteur{
+    display:flex;
+    align-items: center;
+    gap:0.5rem;
+    p{
+        font-family: "Lato", sans-serif;
+        font-size: 1rem;
+    }
+    img{
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+    }
+}
+
+.card-chapeau{
+    p, a{
+        font-family: "Lato", sans-serif;
+        font-size: 0.8rem;
+        color: #000000;
+    }
+    a{
+        display: block;
+        text-align: end;
+    }
+}
+
+.card-cta{
+    display: flex;
+    justify-content: space-between;
+    p{
+        font-family: "Lato", sans-serif;
+        font-size: 0.7rem;
+    }
+    a{
+        font-family: "Lato", sans-serif;
+        font-size: 0.8rem;
+        color: #000000;
+    }
+}
+
+
+
+/* ================== ala une ================= */
+
+    .card-une {
+    width: 100%;
+    min-height: 14rem;
+        .card-title {
+            font-size: 1.6rem;
+        }
+        .img-card {
+            width: 45%;
+            min-width: 45%;
+            height: 20rem;
+            .img{
+                object-fit: cover;
+            }
+        }
+        .card-chapeau {
+            font-size: 1rem;
+        }
+    }
+
+
+/* =============== derniers publiés ============= */
+.four-last{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+
+    .card-article{
+        width:48%;
+        max-width: none;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* ************************** btn =================== */
+
+
+
+
+/* .card-article {
     width: 320px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -52,4 +297,4 @@
 
 .card-article a {
     text-decoration: none;
-}
+} */
