@@ -1,7 +1,8 @@
 <div class="line-commentaire">
     <div class="auteur-commentaire">
+        <img src="{{ asset('img/' ~ commentaire.auteur.photo)}}" alt="image de l'auteur {{commentaire.auteur.nom}} {{commentaire.auteur.prenom}}"
         <p>{{commentaire.auteur.nom}} {{commentaire.auteur.prenom}}</p>
-        <p>{{commentaire.dateCreation |date("m/d/Y") }} </p>
+        <p>{{commentaire.dateCreation | date("d/m/Y à H:i")  }} </p>
     </div>
     <p>{{commentaire.contenu}}</p>
 </div>

@@ -1,21 +1,32 @@
 {% extends 'base.html.twig' %}
-
-{% block body %}
-    <h1>Bolonews</h1>
-    
-    <h2>Bienvenue sur la page de recherche</h2>
-    <form action="" method="GET">
+{% block meta_description  %}Recherchez les articles de Bolonews par mot-clé, dans le titre, le chapeau ou la catégorie et retrouvez rapidement les sujets qui vous intéressent. {% endblock %}
+{% block title %}Page Articles permettant de faire une recherche{% endblock %}
+{% block hero %}
+    <form action="" class="search-form" method="GET">
+        <label for="search">Rerchercher</label>
         <input type="text" id="search" name="search" value="{{app.request.query.get('search')}}">
-        <input type="submit"  value="🔎">
+        <button type="submit">  {{ ux_icon('ph:magnifying-glass') }} </button>
     </form>
-    {% if search is defined and articles | length == 0 %}
-        <p>Aucun article trouvé</p>
-    {% elseif search is defined %}
-        {% for article in articles %}
-            {% include 'article/_cardArticle.html.twig' %}
-        {% endfor %}
-    {% else %}
-        <p>{{message}}</p>
-    {% endif %}
-
+<div class="separator"></div>
+{% endblock %}
+{% block body %}
+    <div class="small-container">
+        <h1>Bienvenue sur la page de recherche</h1>
+        {% if search is defined and articles | length == 0 %}
+            <div class="error-index">
+                <p>Aucun article trouvé</p>
+            </div>
+        {% elseif search is defined %}
+            <h2>Résultats de votre recherche : </h2>
+            <div class="four-last">
+                {% for article in articles %}
+                    {% include 'article/_cardArticle.html.twig' %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="error-index">
+                <p>{{message}}</p>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

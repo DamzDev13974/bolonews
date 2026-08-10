@@ -14,6 +14,8 @@ a {
     text-decoration: none;
 }
 
+
+
 li {
     list-style: none;
 }
@@ -41,6 +43,9 @@ li {
         color: #000000;
         letter-spacing: 1px;
     }
+    a:hover{
+        border-bottom: 1px solid black;
+    }
 }
 
 ul.nav-header {
@@ -51,6 +56,64 @@ ul.nav-header {
 .cta-header {
     display: flex;
     gap: 2rem;
+}
+
+/* **************** Footer ******************** */
+footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 23rem;
+    background-color: #000000;
+    margin-top: 12rem;
+    .top-footer{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color:white;
+        gap:2rem;
+        padding: 2rem;
+        h3{
+            font-size: 1.5rem;
+        }
+        .footer-nav{
+            display: flex;
+            gap:2rem;
+        }
+    }
+    a{
+        color:white;
+    }
+}
+
+.separator-footer{
+    width: 90%;
+    margin: auto;
+    height: 1px;
+    background-color: #ffff;
+}
+
+.bottom-footer{
+    display: flex;
+    color: #ffff;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+    a{
+        font-size: 3rem;
+    }
+}
+
+/* ****************** fixation du footer en bas  **********************/
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
 }
 
 /* ***********************Hero ****************** */
@@ -73,7 +136,7 @@ section.hero-content.top-container {
 
 .separator {
     width: 100%;
-    height: 1px;
+    height: 2px;
     background-color: #000000;
     margin: 1rem 0;
 }
@@ -88,17 +151,81 @@ h1, h2{
 }
 
 
+/* ********************* Page articles avec recherche ********************** */
+
+.search-form {
+    display: flex;
+    align-items: center;
+    width: 23rem;
+    margin: auto;
+    border-bottom: 1px solid black;
+}
+
+.search-form label {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.search-form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.4rem;
+    font-size: 1rem;
+}
+
+.search-form button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.search-form button svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+
+/* ****************** Page détails et commentaires */
 
 
 
 
+/* commentaire */
+.line-commentaire {
+    border: 1px solid #999;
+    border-radius: 0.4rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
 
+.auteur-commentaire {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+}
 
+.auteur-commentaire img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
+.auteur-commentaire p:first-of-type {
+    font-weight: bold;
+}
 
+.auteur-commentaire p:last-of-type {
+    margin-left: auto;
+    font-size: 0.75rem;
+}
 
-
-
+.line-commentaire > p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
 
 
 
@@ -110,14 +237,16 @@ h1, h2{
     min-height: 11rem;
     gap: 1rem;
     margin-top: 2rem;
+    border-radius: 1rem;
+
 }
 
 /* ***********coté gauche******************** */
 
 .img-card {
-    width: 8rem;
+    width: 40%;
     min-width: 8rem;
-    height: 11rem;
+    height: auto;
     overflow: hidden;
     border-radius: 0.3rem;
     img{
@@ -131,6 +260,8 @@ h1, h2{
     display: flex;
     flex-direction: column;
     gap:0.5rem;
+    flex:1;
+    justify-content: center;
 }
 
 .card-top {
@@ -142,6 +273,9 @@ h1, h2{
         background-color: #DBDBDB;
         border-radius: 0.2rem;
         padding: 0.2rem 0.4rem;
+    }
+    a{
+        color: #000000;
     }
 }
 
@@ -173,6 +307,7 @@ h1, h2{
         color: #000000;
     }
     a{
+        margin-top: 1rem;
         display: block;
         text-align: end;
     }
@@ -222,7 +357,6 @@ h1, h2{
     flex-wrap: wrap;
     gap: 2rem;
     justify-content: center;
-
     .card-article{
         width:48%;
         max-width: none;
@@ -233,68 +367,6 @@ h1, h2{
 
 
 
+/* ********************* btn ******************** */
 
 
-
-
-
-/* ************************** btn =================== */
-
-
-
-
-/* .card-article {
-    width: 320px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 1rem;
-    background: white;
-}
-
-.img-card {
-    height: 180px;
-    overflow: hidden;
-}
-
-.img-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.card-content {
-    padding: 1rem;
-}
-
-.card-top,
-.card-auteur,
-.card-cta {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    align-items: center;
-}
-
-.card-title {
-    font-size: 1.2rem;
-    margin: .8rem 0;
-}
-
-.card-auteur {
-    font-size: .85rem;
-    color: #666;
-    margin-bottom: .8rem;
-}
-
-.card-chapeau {
-    font-size: .95rem;
-}
-
-.card-cta {
-    margin-top: 1rem;
-}
-
-.card-article a {
-    text-decoration: none;
-} */

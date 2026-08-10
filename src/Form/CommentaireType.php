@@ -29,7 +29,7 @@ class CommentaireType extends AbstractType
                     ),
                 ]
             ])
-            ->add('Creer', SubmitType::class)
+            ->add('Ajouter', SubmitType::class)
         ;
     }
 

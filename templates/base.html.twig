@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content={% block meta_description %} Bolonews, le nouveau journal connecté et participatif. Partagez vos experiences et connaissances comme bon vous semble.{% endblock %}>
+        <meta name="description" content={% block meta_description %}" Bolonews, le nouveau journal connecté et participatif. Partagez vos experiences et connaissances comme bon vous semble."{% endblock %}>
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         <link rel="stylesheet" href="{{ asset('css/csstempo.css')}}">
@@ -51,13 +51,37 @@
             <section class="hero-content top-container">
                 <a href="{{ path('app_home') }}" aria-label="Aller sur la page d'accueil" title="Aller sur la page d'accueil">Bolonews</a>
                 <p>Les meilleures sauces pour les pâtes et de l'acualité sur le grill</p>
-                <div class="separator">
+                <div class="separator"></div>
                     {% block hero %}
                     {% endblock %}
-                </div>
             </section>
             {% block body %}
             {% endblock %}
         </main>
+        <footer>
+            <div class="top-footer">
+                <h3>Navigation : </h3>
+                <nav>
+                    <ul class="footer-nav">
+                        <li>
+                            <a href="{{ path('app_home') }}" aria-label="Aller sur la page d'accueil" title="Aller sur la page d'accueil">Home</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_recherche') }}" aria-label="Aller sur la page Articles, permettant de faire des recherches d'articles" title="Aller sur la page Articles, permettant de faire des recherches d'articles">Articles</a>
+                        </li>
+                        <li>
+                            <a href="" aria-label="Aller à la page contact" title="aller à la page contact">Contact</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="separator-footer"></div>
+            <div class="bottom-footer">
+                <div class="logo-footer">
+                    <a href="{{ path('app_home') }}" aria-label="Aller sur la page d'accueil" title="Aller sur la page d'accueil">Bolonews</a>
+                </div>
+                <p>© 2026 Fait par Damien.E dans le cadre de la formation Webecom</p>
+            </div>
+        </footer>
     </body>
 </html>
