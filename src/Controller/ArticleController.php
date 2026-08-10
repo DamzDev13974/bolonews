@@ -89,14 +89,11 @@ final class ArticleController extends AbstractController
         //Je vérifie que l'user connecté est bien l'auteur de l'article
         if($article->getAuteur() !== $user){
             //Si il n'est pas l'auteur de l'article,je redirige vers la page d'accueil avec un message d'erreur
-            $message = "Vous n'êtes pas l'auteur de cet article";
-            return $this->render('article/index.html.twig',[
-                'message'=>$message,
-                //Je récupère et envoi au template les 6 derniers articles
-                'articles' => $articleRepository->findForLast(),
-                //Je récupère et envoi au template le dernier article
-                'une'=>$articleRepository->findForUne(),
-            ]);
+            $this->addFlash(
+                'error',
+                "Vous n'êtes pas l'auteur de cet article"
+            );
+            return $this->redirectToRoute('app_home');
         }
         //Je fabrique la vue avec les champs liés à l'entité Article
         $form = $this->createForm(ArticleType::class, $article);
@@ -153,15 +150,12 @@ final class ArticleController extends AbstractController
         $user = $this->getUser();
         //Si l'user connecté n'est pas l'auteurde l'article
         if($article->getAuteur() !== $user){
-                //Si il n'est pas l'auteur de l'article,je redirige vers la page d'accueil avec un message d'erreur
-                $message = "Vous n'êtes pas l'auteur de cet article";
-                return $this->render('article/index.html.twig',[
-                    'message'=>$message,
-                    //Je récupère et envoi au template les 6 derniers articles
-                    'articles' => $articleRepository->findForLast(),
-                    //Je récupère et envoi au template le dernier article
-                    'une'=>$articleRepository->findForUne(),
-                ]);
+            //Si il n'est pas l'auteur de l'article,je redirige vers la page d'accueil avec un message d'erreur
+            $this->addFlash(
+                'error',
+                "Vous n'êtes pas l'auteur de cet article"
+            );
+            return $this->redirectToRoute('app_home');
             }
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($article);
@@ -256,14 +250,11 @@ final class ArticleController extends AbstractController
         $user = $this->getUser();
         if($article->getAuteur() !== $user){
             //Si il n'est pas l'auteur de l'article,je redirige vers la page d'accueil avec un message d'erreur
-            $message = "Vous n'êtes pas l'auteur de cet article";
-            return $this->render('article/index.html.twig',[
-                'message'=>$message,
-                //Je récupère et envoi au template les 6 derniers articles
-                'articles' => $articleRepository->findForLast(),
-                //Je récupère et envoi au template le dernier article
-                'une'=>$articleRepository->findForUne(),
-            ]);
+            $this->addFlash(
+                'error',
+                "Vous n'êtes pas l'auteur de cet article"
+            );
+            return $this->redirectToRoute('app_home');
         }
         //Si l'article est publié, je dépublie
         if($article->isPublie()){

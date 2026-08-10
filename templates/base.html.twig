@@ -35,7 +35,7 @@
                 </nav>
                 <div class="cta-header">
                     {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('app_admin_liste') }}">Mon espace</a>
+                    <a href="{{ path('app_admin_liste') }}">Mon espace {{ ux_icon('ph:user') }}</a>
                     <a href="{{ path('app_logout') }}">Me déconnecter</a>
                 {% elseif app.user  %}
                     <a href="{{ path('app_liste') }}">Mon espace</a>

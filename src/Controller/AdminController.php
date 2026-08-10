@@ -74,8 +74,6 @@ final class AdminController extends AbstractController
         Role : permet à l'admin de modifier un article
         ====================================*/
 
-            //Je récupère l'user connecté via abstractController
-        $user = $this->getUser();
         //Je fabrique la vue avec les champs liés à l'entité Article
         $form = $this->createForm(ArticleType::class, $article);
         //Je charge les informations saisis dans les POST(hydrate l'objet) et rempli les valeurs des attributs

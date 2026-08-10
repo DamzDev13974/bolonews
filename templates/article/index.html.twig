@@ -6,11 +6,11 @@
         <h1>Bienvenue sur Bolonews</h1>
         {# Message d'erreur suite redirection après contrainte de modification ou suppression non respectée #}
         {# Si le message est défini et que la variable existe et contient une vraie valeur #}
-        {% if message is defined and message is not empty %}
+        {% for message in app.flashes('error')%}
             <div class="error-index">
                 <p>{{message}}</p>
             </div>
-        {% endif %}
+        {% endfor %}
         <section class="une">
             <h2>A la une !</h2>
                 <div class="card-une">

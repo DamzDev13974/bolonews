@@ -31,7 +31,7 @@
             <p>{{article.auteur.nom}} {{article.auteur.prenom}}</p>
         </div>
         <div class="card-cta">
-            <p>Publié le {{article.dateCreation | date("m/d/Y")}}</p>
+            <p>Publié le {{article.dateCreation | date("d/m/Y")}}</p>
             <div class="card-social">
                 <a href="{{ path('ajouter_commentaire', {'id': article.id}) }}">{{ ux_icon('ph:chat-circle') }} {{article.commentaires|length }}</a>
                 <a href="{{ path('app_like', {'id': article.id}) }}"> {{ ux_icon('ph:heart') }} {{ article.likeBy|length}}</a>
