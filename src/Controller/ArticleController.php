@@ -150,12 +150,12 @@ final class ArticleController extends AbstractController
         $user = $this->getUser();
         //Si l'user connecté n'est pas l'auteurde l'article
         if($article->getAuteur() !== $user){
-            //Si il n'est pas l'auteur de l'article,je redirige vers la page d'accueil avec un message d'erreur
-            $this->addFlash(
-                'error',
-                "Vous n'êtes pas l'auteur de cet article"
-            );
-            return $this->redirectToRoute('app_home');
+                //Si il n'est pas l'auteur de l'article,je redirige vers la page d'accueil avec un message d'erreur
+                $this->addFlash(
+                    'error',
+                    "Vous n'êtes pas l'auteur de cet article"
+                );
+                return $this->redirectToRoute('app_home');
             }
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($article);
