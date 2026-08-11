@@ -24,9 +24,11 @@
                 {% endfor %}
             </div>
         {% else %}
-            <div class="error-index">
-                <p>{{message}}</p>
-            </div>
+            {% if message is defined and  message is not empty %}
+                <div class="error-index">
+                    <p>{{message}}</p>
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 {% endblock %}

@@ -5,6 +5,7 @@
         'action': path('ajouter_commentaire', {'id': article.id}),
         'method': 'POST',
     }) }}
-        {{ form_widget(form) }}
+        {{ form_widget(form.contenu) }}
+        {{ form_widget(form.Ajouter) }}
     {{ form_end(form) }}
 </div>

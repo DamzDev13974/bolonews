@@ -11,12 +11,12 @@
                 <p>{{ article.titre }}</p>
                 <p>publié le : {{ article.dateCreation ? article.dateCreation|date('Y-m-d H:i:s') : '' }}</p>
             </div>
+            <div class="img-card">
+                <img src="{{ asset('img/article/' ~ article.photo)}}" alt="image de l'article {{article.titre}}">
+            </div>
             <div class="content-details">
                 <p>{{ article.chapeau }}</p>
                 <p>{{ article.contenu }}</p>
-            </div>
-            <div class="img-card">
-                <img src="{{ asset('img/article/' ~ article.photo)}}" alt="image de l'article {{article.titre}}">
             </div>
             <div class="cta-details">
                 <div class="card-auteur">

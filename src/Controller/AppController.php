@@ -49,10 +49,7 @@ final class AppController extends AbstractController
         }
 
         //Sinon j'affiche la page Articles avec un message générique
-        $message = "Veuillez saisir votre mot clé pour la recherche ";
-        return $this->render('article/recherche.html.twig',[
-            "message"=>$message,
-        ]);
+        return $this->render('article/recherche.html.twig');
     }
 
     #[Route('/{id}/detail', name: 'app_article_show', methods: ['GET'])]
