@@ -31,13 +31,14 @@
         </section>
         <div class="separator"></div>
         <section class="commentaire">
+        
+            <h2>Commentaires</h2>
+            {% for commentaire in commentaires %}
+                {% include 'commentaire/_divCommentaire.html.twig' %}
+            {% endfor %}
             {% if app.user %}
-        <h2>Commentaires</h2>
-        {% for commentaire in commentaires %}
-            {% include 'commentaire/_divCommentaire.html.twig' %}
-        {% endfor %}
-        {% include 'commentaire/_formCommentaire.html.twig' %}
-    {% endif %}
+                {% include 'commentaire/_formCommentaire.html.twig' %}
+            {% endif %}
         </section>
     </div>
     

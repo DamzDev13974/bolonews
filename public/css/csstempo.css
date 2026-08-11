@@ -106,6 +106,7 @@ footer{
 }
 
 /* ****************** fixation du footer en bas  **********************/
+
 body {
     min-height: 100vh;
     display: flex;
@@ -300,7 +301,7 @@ h1, h2{
 }
 
 
-/* commentaire */
+/* ************ commentaire ************* */
 .line-commentaire {
     border: 1px solid #999;
     border-radius: 0.4rem;

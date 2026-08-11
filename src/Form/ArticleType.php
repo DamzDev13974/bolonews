@@ -8,6 +8,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,8 +20,8 @@ class ArticleType extends AbstractType
         $builder
             //Contraintes gérées dans l'entité
             ->add('titre',TextType::class)
-            ->add('chapeau',TextType::class)
-            ->add('contenu',TextType::class)
+            ->add('chapeau',TextareaType::class)
+            ->add('contenu',TextareaType::class)
             ->add('photo',FileType::class, [
                 "mapped"=> false,
                 //Contrainte gérée dans le controller
